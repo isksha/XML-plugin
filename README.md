@@ -16,9 +16,11 @@ I used the following XML file for testing:
 </note>
 ```
 <!-- Plugin description -->
+
+## Description
 This is a plugin to locate XML tags inside an XML file and display their line number in the file, the tag type, and the content between the tags. 
 
-After your run the "Run Plugin Configuration", in the "Tools" tab of the IDE you will find an option to "Locate XML Elements" with a magnifying glass icon next to it. If your caret is currently inside a file editor for an XML file, clicking this button will display salient info about the XML elements in the file inside a ToolWindow in the IDE. Reclicking the button will update the data in the ToolWindow. Being outside of an XML file's editing space or working on a non-XML file while invoking the plugin will make it display a warning message.
+After your run the "Run Plugin Configuration", in the "Tools" tab of the IDE you will find an option to "Locate XML Elements" with a magnifying glass icon next to it. If your caret is currently inside a file editor for an XML file, clicking this button will display salient info about the XML elements in the file inside a ToolWindow in the IDE. **Reclicking the button will update the data in the ToolWindow.** Being outside of an XML file's editing space or working on a non-XML file while invoking the plugin will make it display a warning message.
 <!-- Plugin description end -->
 
 ## Development
