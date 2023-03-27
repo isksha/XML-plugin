@@ -1,44 +1,32 @@
-# XML-plugin
+# XML locator plugin
 
-![Build](https://github.com/isksha/XML-plugin/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
+## Building the project
+Clone the repo and either Build the project and use the "Run Plugin configuration" or use the terminal command  `./gradlew runIde`.
+I used the following XML file for testing:
+```
+<note>
+    <to>Tove</to>
+    <body>Hello</body>
+    <from>Jani</from>
 
-## Template ToDo list
-- [x] Create a new [IntelliJ Platform Plugin Template][template] project.
-- [ ] Get familiar with the [template documentation][template].
-- [ ] Adjust the [pluginGroup](./gradle.properties), [plugin ID](./src/main/resources/META-INF/plugin.xml) and [sources package](./src/main/kotlin).
-- [ ] Adjust the plugin description in `README` (see [Tips][docs:plugin-description])
-- [ ] Review the [Legal Agreements](https://plugins.jetbrains.com/docs/marketplace/legal-agreements.html?from=IJPluginTemplate).
-- [ ] [Publish a plugin manually](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html?from=IJPluginTemplate) for the first time.
-- [ ] Set the `PLUGIN_ID` in the above README badges.
-- [ ] Set the [Plugin Signing](https://plugins.jetbrains.com/docs/intellij/plugin-signing.html?from=IJPluginTemplate) related [secrets](https://github.com/JetBrains/intellij-platform-plugin-template#environment-variables).
-- [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html?from=IJPluginTemplate).
-- [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
+
+    <body>Don't forget me this weekend!</body>
+    <body>Don't forget me this weekend!</body>
+</note>
+```
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
+This is a plugin to locate XML tags inside an XML file and display their line number in the file, the tag type, and the content between the tags. 
 
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
-
-To keep everything working, do not remove `<!-- ... -->` sections. 
+After your run the "Run Plugin Configuration", in the "Tools" tab of the IDE you will find an option to "Locate XML Elements" with a magnifying glass icon next to it. If your caret is currently inside a file editor for an XML file, clicking this button will display salient info about the XML elements in the file inside a ToolWindow in the IDE. Reclicking the button will update the data in the ToolWindow. Being outside of an XML file's editing space or working on a non-XML file while invoking the plugin will make it display a warning message.
 <!-- Plugin description end -->
 
-## Installation
+## Development
 
-- Using IDE built-in plugin system:
-  
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "XML-plugin"</kbd> >
-  <kbd>Install Plugin</kbd>
-  
-- Manually:
+- `LocateXMLElementsAction.java`: main class in the plugin, defines an action to fetch info about XML tags of a file when the plugin is invoked via the "Tools" tab 
+- `XMLElementPanel.java`: defines a JBTable to display the fetched info about XML tags in the current XML file
+- `XMLTableModel.java`: extends an AbstractTableModel to fit it to the needs of displaying info about XML tags as rows inside a ToolWindow
 
-  Download the [latest release](https://github.com/isksha/XML-plugin/releases/latest) and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+## What's next
 
-
----
-Plugin based on the [IntelliJ Platform Plugin Template][template].
-
-[template]: https://github.com/JetBrains/intellij-platform-plugin-template
-[docs:plugin-description]: https://plugins.jetbrains.com/docs/intellij/plugin-user-experience.html#plugin-description-and-presentation
+The plugin takes a few more seconds to start than the other functionalities in the "Tools" tab, so some code refactoring is desired to optimize performance. Further, after tinkering with the .update() method of the main action (to fetch and display info), I have decided to forgo implemeting live updates to the table so as not to slow down the IDE's other functionalities, as my attempts to filter through events to only update at the right time worked well but came at the expense of many calls to the XML tag info fetching mechanism and it is not great for a plugin of this kinda to hog IDE's computational resources like this. Further, the plugin would benefit from unit testing.

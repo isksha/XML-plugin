@@ -8,7 +8,7 @@
 
     <actions>
         <action id="LocateXMLElementsAction" class="LocateXMLElementsAction" text="Locate XML Elements"
-                description="Locates XML Elements in the current XML file">
+                description="Locates XML Elements in the current XML file" icon="AllIcons.Actions.Find">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
     </actions>
